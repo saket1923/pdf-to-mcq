@@ -43,7 +43,11 @@ export const extractTextFromPDF = async (file: File): Promise<string> => {
 };
 
 export const generateQuestionsFromText = async (pdfText: string): Promise<any> => {
-  const API_KEY = "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";
+  const API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
+  
+  if (!API_KEY) {
+    throw new Error("OpenRouter API key is not configured. Please add VITE_OPENROUTER_API_KEY to your environment variables.");
+  }
   
   const prompt = `Generate 10 multiple choice questions based on the following text. Each question should have 4 options and one correct answer. Format the response as a JSON array with this structure:
   [
